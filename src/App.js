@@ -1,23 +1,42 @@
-import logo from './logo.svg';
+import { useMemo, useState } from 'react';
 import './App.css';
+import Inputs from './Inputs';
 
 function App() {
+
+  const [firstInput, setFirstInput] = useState();
+  const [secondInput, setSecondInput] = useState();
+  const [sum, setSum] = useState(null);
+  const [active, setActive] = useState(false);
+
+  var firstInputHandler=(event)=> {
+    setFirstInput(event.currentTarget.value);
+  }
+
+  var secondInputHandler=(event)=> {
+    setSecondInput(event.currentTarget.value);
+  }
+
+  var addInputs=(event)=> {
+    setSum(parseInt(firstInput)+parseInt(secondInput));
+  }
+
+  var product=useMemo(()=> {
+    console.log("Multiplication function running");
+    return parseInt(firstInput)*parseInt(secondInput);
+  }, [firstInput, secondInput, sum])
+
+  var toggleEvent=(event)=> {
+    setActive(!active);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
+      <Inputs firstInputHandler={firstInputHandler} secondInputHandler={secondInputHandler} firstInput={firstInput} secondInput={secondInput} addInputs={addInputs} sum={sum} product={product} toggleEvent={toggleEvent} active={active} />
+
+
+
     </div>
   );
 }
